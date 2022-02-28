@@ -149,7 +149,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const modal = document.querySelector(".modal"),
     openModal = document.querySelectorAll("[data-modal]"),
-    closeModal = document.querySelector("[data-close]"),
     modalTimerId = setTimeout(() => {
       modalAction("block", "hidden");
     }, 20000000);
@@ -166,7 +165,11 @@ window.addEventListener("DOMContentLoaded", () => {
   modal.addEventListener("click", (e) =>
     e.target === modal ? modalAction() : modal
   );
-  closeModal.addEventListener("click", () => modalAction());
+  modal.addEventListener("click", (e) => {
+    if (e.target && e.target.className === "modal__close") {
+      modalAction();
+    }
+  });
 
   document.addEventListener("keydown", (e) =>
     e.code === "Escape" ? modalAction() : modal
@@ -283,7 +286,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   const message = {
-    loading: "Loading",
+    loading: "img/form/spinner.svg",
     success: "We call back soon!",
     failure: "Something is wrong",
   };
@@ -291,8 +294,8 @@ window.addEventListener("DOMContentLoaded", () => {
   function postData(form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const messageBlock = document.createElement("div");
-      messageBlock.textContent = message.loading;
+      const messageBlock = document.createElement("img");
+      messageBlock.setAttribute("src", message.loading);
       form.append(messageBlock);
       const request = new XMLHttpRequest();
       request.open("POST", "server.php");
@@ -313,15 +316,40 @@ window.addEventListener("DOMContentLoaded", () => {
 
       request.addEventListener("load", () => {
         if (request.status === 200) {
-          messageBlock.textContent = message.success;
+          messageBlock.remove();
+          showFormStatusInfo(message.success);
           console.log(request.response);
         } else {
-          messageBlock.textContent = message.failure;
+          messageBlock.remove();
+          showFormStatusInfo(message.failure);
         }
       });
-      setTimeout(() => {
-        messageBlock.remove();
-      }, 2000);
     });
+  }
+
+  function showFormStatusInfo(info) {
+    modalAction("block", "hidden");
+    const modalContent = document.querySelector(".modal__content"),
+      parentModalContent = document.querySelector(".modal__dialog"),
+      modalInfo = document.createElement("div");
+
+    modalContent.style.display = "none";
+    modalInfo.classList.add("modal__content");
+    modalInfo.innerHTML = `     
+          <form action="#">
+            <div data-close  class="modal__close">×</div>
+            <div class="modal__title">
+              ${info}
+            </div>
+          </form>        
+    `;
+
+    parentModalContent.append(modalInfo);
+
+    setTimeout(() => {
+      modalInfo.remove();
+      modalAction();
+      modalContent.style.display = "";
+    }, 4000);
   }
 });
