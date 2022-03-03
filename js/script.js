@@ -296,34 +296,34 @@ window.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const messageBlock = document.createElement("img");
       messageBlock.setAttribute("src", message.loading);
-      form.append(messageBlock);
-      const request = new XMLHttpRequest();
-      request.open("POST", "server.php");
-
-      //           json post
-      // request.setRequestHeader("Content-type", "application/json");
-      // const formData = new FormData(form);
-      // const obj = {};
-      // formData.forEach((value, key) => {
-      //   obj[key] = value;
-      // });
-      // request.send(JSON.stringify(obj));
-      // // Php formData
+      messageBlock.style.cssText = `
+      display:block;
+      margin:0 auto;`;
+      form.insertAdjacentElement("afterend", messageBlock);
       const formData = new FormData(form);
-      request.send(formData);
+      const obj = {};
+      formData.forEach((value, key) => {
+        obj[key] = value;
+      });
 
-      form.reset();
-
-      request.addEventListener("load", () => {
-        if (request.status === 200) {
+      fetch("server.php", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(obj),
+      })
+        .then((data) => data.text())
+        .then((data) => {
           messageBlock.remove();
           showFormStatusInfo(message.success);
-          console.log(request.response);
-        } else {
+          console.log(data);
+        })
+        .catch(() => {
           messageBlock.remove();
           showFormStatusInfo(message.failure);
-        }
-      });
+        })
+        .finally(() => {
+          form.reset();
+        });
     });
   }
 
@@ -352,4 +352,16 @@ window.addEventListener("DOMContentLoaded", () => {
       modalContent.style.display = "";
     }, 4000);
   }
+
+  // jsonPlaceHolder
+
+  // fetch("https://jsonplaceholder.typicode.com/", {
+  //   method: "POST",
+  //   body: JSON.stringify({ name: "Nick" }),
+  //   headers: {
+  //     "Content-type": "application/json",
+  //   },
+  // })
+  //   .then((response) => response.json())
+  //   .then((json) => console.log(json));
 });
