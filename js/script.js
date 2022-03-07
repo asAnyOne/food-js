@@ -628,8 +628,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     if (e.target && e.target.tagName == "INPUT") {
       paramObj[e.target.id] = e.target.value;
-      localStorage.setItem(`${e.target.id}`, e.target.value);
-      console.log(localStorage.setItem(`${e.target.id}`, e.target.value));
+      localStorage.setItem(e.target.id, e.target.value);
       showResult();
     }
   });
@@ -670,28 +669,24 @@ window.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("personAction", act);
     localStorage.setItem("personParams", JSON.stringify(paramObj));
   }
-  if (
-    localStorage.getItem("personParams") ||
-    localStorage.getItem("active") ||
-    localStorage.getItem("gender")
-  ) {
-    paramObj = JSON.parse(localStorage.getItem("personParams"));
-    active[localStorage.getItem("active")].classList.add(act);
-    gender[localStorage.getItem("gender")].classList.add(act);
+  if (localStorage.personParams || localStorage.active || localStorage.gender) {
+    paramObj = JSON.parse(localStorage.personParams);
+    active[localStorage.active].classList.add(act);
+    gender[localStorage.gender].classList.add(act);
     inputs.forEach((input) => {
       switch (input.id) {
         case "weight":
-          input.value = localStorage.getItem("weight");
+          input.value = localStorage.weight;
           break;
         case "age":
-          input.value = localStorage.getItem("age");
+          input.value = localStorage.age;
           break;
         case "height":
-          input.value = localStorage.getItem("height");
+          input.value = localStorage.height;
           break;
       }
     });
-    showResult(localStorage.getItem("personAction"));
+    showResult(localStorage.personActions);
   } else {
     showResult(activity.small);
     gender[0].classList.add(act);
