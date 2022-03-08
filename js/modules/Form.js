@@ -1,4 +1,4 @@
-import Modal from "./Modal.js";
+import Modal from "./Modal";
 
 export default function Form() {
   const forms = document.querySelectorAll("form");

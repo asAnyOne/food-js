@@ -3,7 +3,7 @@ export default function Modal() {
     openModal = document.querySelectorAll("[data-modal]"),
     modalTimerId = setTimeout(() => {
       modalAction("block", "hidden");
-    }, 20000000);
+    }, 2000000);
 
   function modalAction(display = "", overflow = "") {
     document.body.style.overflow = overflow;
