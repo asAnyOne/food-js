@@ -437,25 +437,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Slider)
 /* harmony export */ });
-function Slider() {
-  const slides = document.querySelectorAll(".offer__slide"),
-    prev = document.querySelector(".offer__slider-prev"),
-    next = document.querySelector(".offer__slider-next"),
-    current = document.querySelector("#current"),
-    total = document.querySelector("#total"),
-    sliderWrapper = document.querySelector(".offer__slider-wrapper"),
-    sliderInner = sliderWrapper.querySelector(".offer__slider-inner"),
+function Slider({
+  selSlides,
+  selPrev,
+  selNext,
+  selCurrent,
+  selTotal,
+  selSliderWrapper,
+  selSliderInner,
+}) {
+  const slides = document.querySelectorAll(selSlides),
+    prev = document.querySelector(selPrev),
+    next = document.querySelector(selNext),
+    current = document.querySelector(selCurrent),
+    total = document.querySelector(selTotal),
+    sliderWrapper = document.querySelector(selSliderWrapper),
+    sliderInner = sliderWrapper.querySelector(selSliderInner),
     circleWrapper = document.createElement("div"),
     width = window.getComputedStyle(sliderWrapper).width;
   let slideIndex = 1;
   let innerOffset = 0;
 
   circleWrapper.style.cssText = `
-display: flex;
-min-width: 80px; 
-margin: 0 auto;  
-padding-top: 30px;
-justify-content: space-between;`;
+    display: flex;
+    min-width: 80px; 
+    margin: 0 auto;  
+    padding-top: 30px;
+    justify-content: space-between;`;
   sliderWrapper.after(circleWrapper);
   for (let i = 0; i < slides.length; i++) {
     const el = document.createElement("span");
@@ -629,10 +637,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Tabs)
 /* harmony export */ });
-function Tabs() {
-  const tabContents = document.querySelectorAll(".tabcontent"),
-    tabs = document.querySelectorAll(".tabheader__item"),
-    tabsParent = document.querySelector(".tabheader__items");
+function Tabs({ tabContent, tabItem, tabItems, activeClass }) {
+  const tabContents = document.querySelectorAll(tabContent),
+    tabs = document.querySelectorAll(tabItem),
+    tabsParent = document.querySelector(tabItems);
 
   function tabsHide() {
     tabContents.forEach((content) => {
@@ -640,13 +648,13 @@ function Tabs() {
       content.classList.remove("fade");
     });
     tabs.forEach((item) => {
-      item.classList.remove("tabheader__item_active");
+      item.classList.remove(activeClass);
     });
   }
   function tabsShow(i = 0) {
     tabContents[i].classList.remove("hide");
     tabContents[i].classList.add("fade");
-    tabs[i].classList.add("tabheader__item_active");
+    tabs[i].classList.add(activeClass);
   }
   tabsHide();
   tabsShow();
@@ -674,9 +682,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Timer)
 /* harmony export */ });
-function Timer() {
-  const deadline = "2022-03-18";
-
+function Timer({ selector, deadline }) {
   function getTimeRemaining(timeOff) {
     const totalTime = Date.parse(timeOff) - Date.parse(new Date()),
       days = Math.floor(totalTime / (1000 * 60 * 60 * 24)),
@@ -725,7 +731,7 @@ function Timer() {
     }
   }
 
-  setTimer(".timer", deadline);
+  setTimer(selector, deadline);
 }
 
 
@@ -810,12 +816,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener("DOMContentLoaded", () => {
-  (0,_modules_Tabs__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  (0,_modules_Timer__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  (0,_modules_Tabs__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    tabContent: ".tabcontent",
+    tabItem: ".tabheader__item",
+    tabItems: ".tabheader__items",
+    activeClass: "tabheader__item_active",
+  });
+  (0,_modules_Timer__WEBPACK_IMPORTED_MODULE_1__["default"])({ selector: ".timer", deadline: "2022-03-18" });
   (0,_modules_Modal__WEBPACK_IMPORTED_MODULE_2__["default"])();
   (0,_modules_MenuCards__WEBPACK_IMPORTED_MODULE_3__["default"])();
   (0,_modules_Form__WEBPACK_IMPORTED_MODULE_4__["default"])();
-  (0,_modules_Slider__WEBPACK_IMPORTED_MODULE_5__["default"])();
+  (0,_modules_Slider__WEBPACK_IMPORTED_MODULE_5__["default"])({
+    selSlides: ".offer__slide",
+    selPrev: ".offer__slider-prev",
+    selNext: ".offer__slider-next",
+    selCurrent: "#current",
+    selTotal: "#total",
+    selSliderWrapper: ".offer__slider-wrapper",
+    selSliderInner: ".offer__slider-inner",
+  });
   (0,_modules_Calc__WEBPACK_IMPORTED_MODULE_6__["default"])();
 });
 

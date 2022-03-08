@@ -1,6 +1,4 @@
-export default function Timer() {
-  const deadline = "2022-03-18";
-
+export default function Timer({ selector, deadline }) {
   function getTimeRemaining(timeOff) {
     const totalTime = Date.parse(timeOff) - Date.parse(new Date()),
       days = Math.floor(totalTime / (1000 * 60 * 60 * 24)),
@@ -49,5 +47,5 @@ export default function Timer() {
     }
   }
 
-  setTimer(".timer", deadline);
+  setTimer(selector, deadline);
 }

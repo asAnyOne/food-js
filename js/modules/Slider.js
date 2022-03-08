@@ -1,22 +1,30 @@
-export default function Slider() {
-  const slides = document.querySelectorAll(".offer__slide"),
-    prev = document.querySelector(".offer__slider-prev"),
-    next = document.querySelector(".offer__slider-next"),
-    current = document.querySelector("#current"),
-    total = document.querySelector("#total"),
-    sliderWrapper = document.querySelector(".offer__slider-wrapper"),
-    sliderInner = sliderWrapper.querySelector(".offer__slider-inner"),
+export default function Slider({
+  selSlides,
+  selPrev,
+  selNext,
+  selCurrent,
+  selTotal,
+  selSliderWrapper,
+  selSliderInner,
+}) {
+  const slides = document.querySelectorAll(selSlides),
+    prev = document.querySelector(selPrev),
+    next = document.querySelector(selNext),
+    current = document.querySelector(selCurrent),
+    total = document.querySelector(selTotal),
+    sliderWrapper = document.querySelector(selSliderWrapper),
+    sliderInner = sliderWrapper.querySelector(selSliderInner),
     circleWrapper = document.createElement("div"),
     width = window.getComputedStyle(sliderWrapper).width;
   let slideIndex = 1;
   let innerOffset = 0;
 
   circleWrapper.style.cssText = `
-display: flex;
-min-width: 80px; 
-margin: 0 auto;  
-padding-top: 30px;
-justify-content: space-between;`;
+    display: flex;
+    min-width: 80px; 
+    margin: 0 auto;  
+    padding-top: 30px;
+    justify-content: space-between;`;
   sliderWrapper.after(circleWrapper);
   for (let i = 0; i < slides.length; i++) {
     const el = document.createElement("span");
