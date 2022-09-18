@@ -799,7 +799,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
   (0,_modules_Timer__WEBPACK_IMPORTED_MODULE_1__["default"])({
     selector: ".timer",
-    deadline: "2022-03-18"
+    deadline: "2022-12-18"
   });
   (0,_modules_Modal__WEBPACK_IMPORTED_MODULE_2__["default"])();
   (0,_modules_MenuCards__WEBPACK_IMPORTED_MODULE_3__["default"])();
