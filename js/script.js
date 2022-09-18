@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
     tabItems: ".tabheader__items",
     activeClass: "tabheader__item_active",
   });
-  Timer({ selector: ".timer", deadline: "2022-03-18" });
+  Timer({ selector: ".timer", deadline: "2022-12-18" });
   Modal();
   MenuCards();
   Form();
